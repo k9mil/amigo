@@ -6,6 +6,10 @@ main = Blueprint('main', __name__)
 def index():
     return render_template("index.html")
 
+@main.route("/waiting")
+def waiting():
+    return render_template("waiting.html")
+
 @main.route("/chat")
 def chat():
     return render_template("chat.html")
