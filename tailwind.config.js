@@ -13,6 +13,7 @@ module.exports = {
         current: 'currentColor',
         black: colors.black,
         white: colors.white,
+        red: colors.red,
         'neutral': {
           50: '#fafafa',
           100: '#f5f5f5',
