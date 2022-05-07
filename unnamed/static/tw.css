@@ -918,3 +918,153 @@ Ensure the default browser behavior of the `hidden` attribute.
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
 }
+
+@media (min-width: 1024px) {
+  .lg\:h-\[22rem\] {
+    height: 22rem;
+  }
+
+  .lg\:h-\[20rem\] {
+    height: 20rem;
+  }
+
+  .lg\:h-\[19rem\] {
+    height: 19rem;
+  }
+
+  .lg\:w-\[30rem\] {
+    width: 30rem;
+  }
+
+  .lg\:w-\[20rem\] {
+    width: 20rem;
+  }
+
+  .lg\:w-\[25rem\] {
+    width: 25rem;
+  }
+
+  .lg\:w-48 {
+    width: 12rem;
+  }
+
+  .lg\:p-4 {
+    padding: 1rem;
+  }
+
+  .lg\:p-\[0\.35rem\] {
+    padding: 0.35rem;
+  }
+
+  .lg\:text-4xl {
+    font-size: 2.25rem;
+  }
+
+  .lg\:text-sm {
+    font-size: .875rem;
+  }
+
+  .lg\:text-mini {
+    font-size: .65rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:h-\[15rem\] {
+    height: 15rem;
+  }
+
+  .xl\:h-\[16\.5rem\] {
+    height: 16.5rem;
+  }
+
+  .xl\:h-\[18rem\] {
+    height: 18rem;
+  }
+
+  .xl\:w-\[40rem\] {
+    width: 40rem;
+  }
+
+  .xl\:w-\[30rem\] {
+    width: 30rem;
+  }
+
+  .xl\:w-\[33rem\] {
+    width: 33rem;
+  }
+
+  .xl\:w-32 {
+    width: 8rem;
+  }
+
+  .xl\:w-64 {
+    width: 16rem;
+  }
+
+  .xl\:min-w-fit {
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+  }
+
+  .xl\:p-4 {
+    padding: 1rem;
+  }
+
+  .xl\:p-\[0\.35rem\] {
+    padding: 0.35rem;
+  }
+
+  .xl\:text-5xl {
+    font-size: 3rem;
+  }
+
+  .xl\:text-4xl {
+    font-size: 2.25rem;
+  }
+
+  .xl\:text-sm {
+    font-size: .875rem;
+  }
+
+  .xl\:text-mini {
+    font-size: .65rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .\32xl\:h-\[16\.5rem\] {
+    height: 16.5rem;
+  }
+
+  .\32xl\:w-\[40rem\] {
+    width: 40rem;
+  }
+
+  .\32xl\:w-max {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+  }
+
+  .\32xl\:p-4 {
+    padding: 1rem;
+  }
+
+  .\32xl\:p-\[0\.35rem\] {
+    padding: 0.35rem;
+  }
+
+  .\32xl\:text-6xl {
+    font-size: 4rem;
+  }
+
+  .\32xl\:text-mini {
+    font-size: .65rem;
+  }
+
+  .\32xl\:text-sm {
+    font-size: .875rem;
+  }
+}
