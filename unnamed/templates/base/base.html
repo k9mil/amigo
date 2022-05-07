@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='tw.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='other.css') }}">
     <title>Base Template</title>
 </head>
-<body class="w-screen h-screen overflow-x-hidden">
+<body>
     {% block body %}
     {% endblock %}
 </body>
