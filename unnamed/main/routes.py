@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Blueprint, redirect, request
-from flask_socketio import send
+from flask_socketio import send, emit
 from unnamed.config import Config
 from urllib.parse import urlencode
 from .. import socketio
@@ -10,8 +10,12 @@ main = Blueprint("main", __name__)
 
 @socketio.on("message")
 def handleMessage(msg):
-    print("Message: " + msg)
+    print(msg)
     send(msg, broadcast = True)
+
+@socketio.on("connect")
+def test_connect():
+    emit('my response', {'data': 'Connected'})
 
 @main.route("/")
 def index():

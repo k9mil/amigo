@@ -3,13 +3,15 @@
     <title>amigo — chatting with andrew!</title>
 {% endblock %}
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.socket.io/4.4.1/socket.io.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+        
             var socket = io.connect("http://127.0.0.1:5000");
         
             socket.on("connect", function() {
-                socket.send("User has connected!");
+                console.log("User has connected!");
             });
         
             socket.on("message", function(msg) {
@@ -17,11 +19,14 @@
                 console.log("Received message");
             });
         
-            $("#sendbutton").on("click", function() {
-                socket.send($("#myMessage").val());
-                $("#myMessage").val("");
+            $('#text').keypress(function(e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    text = $('#text').val();
+                    $('#text').val('');
+                    console.log('text', {msg: text});
+                }
             });
-        
         });
         </script>
 {% endblock %}
@@ -29,13 +34,13 @@
     <div class="flex flex-col w-screen h-screen justify-center items-center font-inter">
         <div class="flex justify-center items-center">
             <div class="flex flex-col items-center space-y-6">
-                <div class="flex flex-col justify-between 2xl:w-[40rem] xl:w-[30rem] lg:w-[24rem] 2xl:h-[24rem] xl:h-[26rem] lg:h-[27.5rem] shadow-2xl rounded-xl bg-white border-2 border-white space-y-4 2xl:p-4 xl:p-4 lg:p-4 2xl:text-sm xl:text-sm lg:text-sm">
+                <div id="messages" class="flex flex-col justify-between 2xl:w-[40rem] xl:w-[30rem] lg:w-[24rem] 2xl:h-[24rem] xl:h-[26rem] lg:h-[27.5rem] shadow-2xl rounded-xl bg-white border-2 border-white space-y-4 2xl:p-4 xl:p-4 lg:p-4 2xl:text-sm xl:text-sm lg:text-sm">
                     <div class="text-slate-500 justify-center items-center text-center text-mini">
                         <p>Beginning of your conversation with Andrew!</p>
                     </div>
                     <div class="border-t-2 border-gray-200 px-4 pt-4">
                         <div class="flex flex-row text-center justify-center items-center">
-                           <input type="text" placeholder="Write your message!" class="pl-4 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
+                           <input id="text" type="text" placeholder="Write your message!" class="pl-4 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
                         </div>
                      </div>
                 </div>

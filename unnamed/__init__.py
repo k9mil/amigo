@@ -2,7 +2,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from unnamed.config import Config
 
-socketio = SocketIO(cors_allowed_origins="*", logger=True, engineio_logger=True)
+socketio = SocketIO(cors_allowed_origins="*")
 
 def create_app(config_class=Config):
     app = Flask(__name__)
