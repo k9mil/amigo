@@ -1,5 +1,8 @@
 from flask import Flask
+from flask_socketio import SocketIO
 from unnamed.config import Config
+
+socketio = SocketIO(cors_allowed_origins="*", logger=True, engineio_logger=True)
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -11,4 +14,6 @@ def create_app(config_class=Config):
     app.register_blueprint(main)
     app.register_blueprint(errors)
 
+    socketio.init_app(app)
+    
     return app

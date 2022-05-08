@@ -1,6 +1,29 @@
 {% extends "./base/base.html" %}
 {% block title %}
-    <title>amigo — chatting with {name}!</title>
+    <title>amigo — chatting with andrew!</title>
+{% endblock %}
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var socket = io.connect("http://127.0.0.1:5000");
+        
+            socket.on("connect", function() {
+                socket.send("User has connected!");
+            });
+        
+            socket.on("message", function(msg) {
+                $("#messages").append("<li>"+msg+"</li>");
+                console.log("Received message");
+            });
+        
+            $("#sendbutton").on("click", function() {
+                socket.send($("#myMessage").val());
+                $("#myMessage").val("");
+            });
+        
+        });
+        </script>
 {% endblock %}
 {% block body %}
     <div class="flex flex-col w-screen h-screen justify-center items-center font-inter">
@@ -12,7 +35,7 @@
                     </div>
                     <div class="border-t-2 border-gray-200 px-4 pt-4">
                         <div class="flex flex-row text-center justify-center items-center">
-                           <input type="text" placeholder="Write your message!" class="pl-2 w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-md py-3">
+                           <input type="text" placeholder="Write your message!" class="pl-4 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
                         </div>
                      </div>
                 </div>
