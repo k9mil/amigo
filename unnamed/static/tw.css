@@ -582,6 +582,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 2.25rem;
 }
 
+.mt-24 {
+  margin-top: 6rem;
+}
+
 .block {
   display: block;
 }
@@ -650,6 +654,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.5rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .w-screen {
   width: 100vw;
 }
@@ -702,6 +710,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .max-w-md {
@@ -1432,6 +1444,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: 19.75rem;
   }
 
+  .lg\:h-\[23\.5rem\] {
+    height: 23.5rem;
+  }
+
   .lg\:w-\[20rem\] {
     width: 20rem;
   }
@@ -1532,6 +1548,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: 18.5rem;
   }
 
+  .xl\:h-\[22rem\] {
+    height: 22rem;
+  }
+
   .xl\:w-\[30rem\] {
     width: 30rem;
   }
@@ -1576,6 +1596,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .\32xl\:h-\[17\.5rem\] {
     height: 17.5rem;
+  }
+
+  .\32xl\:h-\[18rem\] {
+    height: 18rem;
+  }
+
+  .\32xl\:h-\[20rem\] {
+    height: 20rem;
   }
 
   .\32xl\:w-\[40rem\] {
