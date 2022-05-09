@@ -17,3 +17,7 @@ def error_404(error):
 @errors.app_errorhandler(500)
 def error_500(error):
     return render_template("errors/500.html"), 500
+
+@errors.route("/notfound")
+def notfound():
+    return render_template("errors/game_not_found.html")

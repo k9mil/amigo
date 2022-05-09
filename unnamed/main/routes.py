@@ -45,7 +45,7 @@ def auth_game():
         elif (steam_data["gameid"]):
             print(steam_data["gameid"])
     except KeyError:
-        return render_template("errors/game_not_found.html")
+        return redirect(url_for("errors.notfound"))
         
     return redirect(url_for("main.waiting"))
 

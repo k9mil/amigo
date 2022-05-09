@@ -476,8 +476,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: absolute;
 }
 
-.mr-5 {
-  margin-right: 1.25rem;
+.mr-4 {
+  margin-right: 1rem;
 }
 
 .ml-2 {
@@ -498,10 +498,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .-ml-1 {
   margin-left: -0.25rem;
-}
-
-.mr-4 {
-  margin-right: 1rem;
 }
 
 .block {
@@ -837,14 +833,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .italic {
   font-style: italic;
-}
-
-.leading-\[50px\] {
-  line-height: 50px;
-}
-
-.leading-\[48px\] {
-  line-height: 48px;
 }
 
 .leading-\[46px\] {
