@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .background-animate {
+        background-size: 400%;
+    
+        -webkit-animation: gradient 10s ease infinite forwards;
+        -moz-animation: gradient 10s ease infinite forwards;
+        animation: gradient 10s ease infinite forwards;
+        animation-play-state: running;
+      }
+    
+    .background-animate-hover {
+        animation-play-state: running;
+    }
+    
+      @keyframes gradient {
+        0%,
+        100% {
+          background-position: 0% 100%;
+        }
+        50% {
+          background-position: 100% 0%;
+        }
+      }
+    }
