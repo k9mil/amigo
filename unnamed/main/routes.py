@@ -19,7 +19,10 @@ def handleMessage(msg):
 def connect():
     clients.append(request.sid)
     print(clients)
-    emit('my response', {'data': 'Connected'})
+    emit("my response", {"data": "Connected"})
+
+    if len(clients) == 2:
+        emit("redirect", {"url": url_for("main.chat")}, broadcast=True)
 
 @socketio.on("disconnect")
 def disconnect():

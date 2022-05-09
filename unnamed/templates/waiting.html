@@ -17,6 +17,10 @@
                 $("#messages").append("<p>" + msg + "</p>");
                 console.log("Received message");
             });
+
+            socket.on("redirect", function (data) {
+                window.location = data.url;
+            });
         
             $("#messages").keypress(function(e) {
                 var code = e.keyCode || e.which;
