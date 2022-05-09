@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Blueprint, redirect, request
+from flask import Flask, render_template, Blueprint, redirect, request, url_for
 from flask_socketio import send, emit
 from unnamed.config import Config
 from urllib.parse import urlencode
@@ -31,6 +31,10 @@ def index():
 
 @main.route("/waiting")
 def waiting():
+    return render_template("waiting.html")
+
+@main.route("/auth_game")
+def auth_game():
     steam_id_re = re.compile("https://steamcommunity.com/openid/id/(.*?)$")
     match = steam_id_re.search(dict(request.args)["openid.identity"])
     steam_data = get_user_info(match.group(1))
@@ -43,7 +47,7 @@ def waiting():
     except KeyError:
         return render_template("errors/game_not_found.html")
         
-    return render_template("waiting.html")
+    return redirect(url_for("main.waiting"))
 
 @main.route("/chat")
 def chat():
@@ -58,7 +62,7 @@ def authenticate():
         "openid.identity": "http://specs.openid.net/auth/2.0/identifier_select",
         "openid.claimed_id": "http://specs.openid.net/auth/2.0/identifier_select",
         "openid.mode": "checkid_setup",
-        "openid.return_to": "http://127.0.0.1:5000/waiting",
+        "openid.return_to": "http://127.0.0.1:5000/auth_game",
         "openid.realm": "http://127.0.0.1:5000"
     }
 
