@@ -12,23 +12,9 @@
             socket.on("connect", function() {
                 console.log("User has connected!");
             });
-        
-            socket.on("message", function(msg) {
-                $("#messages").append("<p>" + msg + "</p>");
-                console.log("Received message");
-            });
-
+            
             socket.on("redirect", function (data) {
                 window.location = data.url;
-            });
-        
-            $("#messages").keypress(function(e) {
-                var code = e.keyCode || e.which;
-                if (code == 13) {
-                    text = $("#text").val();
-                    $("#text").val("");
-                    socket.send(text);
-                }
             });
         });
         </script>

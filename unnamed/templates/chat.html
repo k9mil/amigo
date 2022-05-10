@@ -2,6 +2,29 @@
 {% block title %}
     <title>amigo — chatting with andrew!</title>
 {% endblock %}
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var socket = io.connect("http://127.0.0.1:5000");
+        
+            socket.on("message", function(msg) {
+                $("#messages").append("<p>" + msg + "</p>");
+                console.log("Received message");
+            });
+        
+            $("#messages").keypress(function(e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    text = $("#text").val();
+                    $("#text").val("");
+                    socket.send(text);
+                }
+            });
+        });
+        </script>
+{% endblock %}
 {% block body %}
     <div class="flex flex-col w-screen h-screen justify-center items-center font-inter">
         <div id="messages" class="flex justify-center items-center">
