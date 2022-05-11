@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Blueprint, redirect, request, url_for
-from flask_socketio import send, emit
+from flask_socketio import send, emit, join_room, leave_room
 from unnamed.config import Config
 from urllib.parse import urlencode
 from furl import furl
@@ -9,24 +9,64 @@ import re, urllib, json
 
 main = Blueprint("main", __name__)
 
-clients = []
+total_clients = []
+n = 1
+rooms = {}
 
 @socketio.on("message")
 def handleMessage(msg):
-    send(msg, broadcast = True)
+    global roomName
+    room = [k for k, v in rooms.items() if request.sid in v]
+    send(msg, to=room[0])
 
 @socketio.on("connect")
 def connect():
-    clients.append(request.sid)
-    print(clients)
-    emit("my response", {"data": "Connected"})
+    total_clients.append(request.sid)
 
-    if len(clients) == 2:
+    if len(total_clients) % 2 == 0:
         emit("redirect", {"url": url_for("main.chat")}, broadcast=True)
 
 @socketio.on("disconnect")
 def disconnect():
-    clients.remove(request.sid)
+    total_clients.remove(request.sid)
+    print("disconnect")
+
+@socketio.on("join")
+def on_join():
+    global n
+    roomName = "room" + str(n)
+
+    if roomName in rooms:
+        pass
+    else: 
+        rooms[roomName] = []
+
+    if len(rooms[roomName]) <= 1:
+        rooms[roomName].append(request.sid)
+    else:
+        n += 1
+        roomName = "room" + str(n)
+
+        if roomName in rooms:
+            pass
+        else: 
+            rooms[roomName] = []
+
+        rooms[roomName].append(request.sid)
+
+    room = roomName
+    join_room(room)
+
+@socketio.on("leave")
+def on_leave():
+    global n
+    roomName = "room" + str(n)
+
+    total_clients.remove(request.sid)
+    rooms[roomName].remove(request.sid)
+
+    room = roomName
+    leave_room(room)
 
 @main.route("/")
 def index():
