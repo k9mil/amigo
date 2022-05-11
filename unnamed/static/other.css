@@ -1,3 +1,23 @@
 .background-transparent {
     background-color: rgba(255, 255, 255, 0.85);
 }
+
+.scrollbar::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed;
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #b3b3b3;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #8c8c8c;
+  }
