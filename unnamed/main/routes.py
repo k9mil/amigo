@@ -17,7 +17,11 @@ rooms = {}
 def handleMessage(msg):
     global roomName
     room = [k for k, v in rooms.items() if request.sid in v]
-    send(msg, to=room[0])
+    sender_id = request.sid
+    tmp = []
+    tmp.append(msg)
+    tmp.append(sender_id)
+    send({"msg": tmp}, to=room[0])
 
 @socketio.on("connect")
 def connect():

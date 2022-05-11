@@ -22,10 +22,22 @@
             });
 
             socket.on("message", function(msg) {
-                $("#messages").append("<p>" + msg + "</p>");
+                if (socket.id == msg.msg[1]) {
+                    $(".messages").append(
+                    `<div class="flex flex-row w-max bg-slate-200 rounded-lg 2xl:p-[0.45rem] xl:p-[0.45rem] lg:p-[0.45rem] text-black justify-center items-center ml-auto">
+                        <p>` + msg.msg[0] + `</p>
+                    </div>`
+                );  
+                } else {
+                    $(".messages").append(
+                    `<div class="flex flex-row w-max bg-blue-500 rounded-lg 2xl:p-[0.45rem] xl:p-[0.45rem] lg:p-[0.45rem] text-white justify-center items-center">
+                        <p>` + msg.msg[0] + `</p>
+                    </div>`  
+                 );    
+                }
             });
         
-            $("#messages").keypress(function(e) {
+            $("#text").keypress(function(e) {
                 var code = e.keyCode || e.which;
                 if (code == 13) {
                     text = $("#text").val();
@@ -38,11 +50,14 @@
 {% endblock %}
 {% block body %}
     <div class="flex flex-col w-screen h-screen justify-center items-center font-inter">
-        <div id="messages" class="flex justify-center items-center">
-            <div class="flex flex-col items-center space-y-6">
-                <div class="flex flex-col justify-between 2xl:w-[40rem] xl:w-[30rem] lg:w-[24rem] 2xl:h-[24rem] xl:h-[26rem] lg:h-[27.5rem] shadow-2xl rounded-xl bg-white border-2 border-white space-y-4 2xl:p-4 xl:p-4 lg:p-4 2xl:text-sm xl:text-sm lg:text-sm">
-                    <div class="text-slate-500 justify-center items-center text-center text-mini">
-                        <p>Beginning of your conversation with Andrew!</p>
+        <div class="flex justify-center items-center">
+            <div class="flex flex-col items-center">
+                <div class="text flex flex-col justify-between 2xl:w-[45rem] xl:w-[35rem] lg:w-[29rem] 2xl:h-[30rem] xl:h-[36rem] lg:h-[37.5rem] shadow-2xl rounded-xl bg-white border-2 border-white space-y-4 2xl:p-4 xl:p-4 lg:p-4 2xl:text-sm xl:text-sm lg:text-sm">
+                    <span class="text-slate-500 justify-center items-center text-center text-mini">
+                        Beginning of your conversation with Andrew!
+                    </span>
+                    <div class="messages">
+
                     </div>
                     <div class="border-t-2 border-gray-200 px-4 pt-4">
                         <div class="flex flex-row text-center justify-center items-center">
