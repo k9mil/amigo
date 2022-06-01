@@ -1,8 +1,9 @@
 import re, json, urllib
 
-from flask import request, redirect, url_for, g
+from flask import request, redirect, url_for
 from urllib.parse import urlencode
 
+usr_data = []
 
 def encode_url():
     """
@@ -35,7 +36,7 @@ def get_data():
     except KeyError:
         return redirect(url_for("errors.notfound"))
         
-    g.usr_data.append(user)
+    usr_data.append(user)
 
 def obtain_data(user, steam_data):
     if (steam_data["gameextrainfo"]):

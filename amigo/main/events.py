@@ -1,15 +1,16 @@
-from flask import request, url_for, g
+from flask import request, url_for
 from flask_socketio import send, emit, join_room, leave_room
 
 from .. import socketio
 
 total_clients = []
-usr_data = []
 n = 1
 rooms = {}
 
 @socketio.on("connect")
 def connect():
+    print("connected")
+    print(total_clients)
     total_clients.append(request.sid) 
 
     if len(total_clients) % 2 == 0:
