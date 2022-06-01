@@ -3,9 +3,9 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [
-    './unnamed/templates/base/*.html',
-    './unnamed/templates/errors/*.html',
-    './unnamed/templates/*.html'
+    './amigo/templates/base/*.html',
+    './amigo/templates/errors/*.html',
+    './amigo/templates/*.html'
   ],
   theme: {
     extend: {
