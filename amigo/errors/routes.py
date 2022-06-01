@@ -1,4 +1,4 @@
-from unnamed import errors
+from amigo import errors
 from flask import Blueprint, render_template
 
 errors = Blueprint('errors', __name__)

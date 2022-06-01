@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Blueprint, redirect, request, url_for
 from flask_socketio import send, emit, join_room, leave_room
-from unnamed.config import Config
+from amigo.config import Config
 from urllib.parse import urlencode
 from furl import furl
 from .. import socketio
@@ -10,6 +10,7 @@ import re, urllib, json
 main = Blueprint("main", __name__)
 
 total_clients = []
+usr_data = []
 n = 1
 rooms = {}
 
@@ -25,7 +26,7 @@ def handleMessage(msg):
 
 @socketio.on("connect")
 def connect():
-    total_clients.append(request.sid)
+    total_clients.append(request.sid) 
 
     if len(total_clients) % 2 == 0:
         emit("redirect", {"url": url_for("main.chat")}, broadcast=True)
@@ -85,15 +86,19 @@ def auth_game():
     steam_id_re = re.compile("https://steamcommunity.com/openid/id/(.*?)$")
     match = steam_id_re.search(dict(request.args)["openid.identity"])
     steam_data = get_user_info(match.group(1))
+    user = []
+    
+    user.append(steam_data["personaname"])
 
     try:
         if (steam_data["gameextrainfo"]):
-            print(steam_data["gameextrainfo"])
+            user.append(steam_data["gameextrainfo"])
         elif (steam_data["gameid"]):
-            print(steam_data["gameid"])
+            user.append(steam_data["gameid"])
     except KeyError:
         return redirect(url_for("errors.notfound"))
         
+    usr_data.append(user)
     return redirect(url_for("main.waiting"))
 
 @main.route("/chat")
