@@ -1,6 +1,6 @@
 import re, json, urllib
 
-from flask import request, redirect, url_for
+from flask import request
 from urllib.parse import urlencode
 
 user_data = []
@@ -33,15 +33,13 @@ def get_data():
     steam_data = get_user_info(current_user.group(1))
     
     user.append(steam_data["personaname"])
-    obtain_data(user, steam_data)
+    obtain_game(user, steam_data)
 
     user_data.append(user)
 
-def obtain_data(user, steam_data):
+def obtain_game(user, steam_data):
     """
     """
-    print("a")
-    print(steam_data)
     if (steam_data["gameextrainfo"]):
         user.append(steam_data["gameextrainfo"])
     elif (steam_data["gameid"]):

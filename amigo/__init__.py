@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask
 from flask_socketio import SocketIO
 from amigo.config import Config
 

@@ -1,8 +1,5 @@
-import re, urllib, json
+from flask import Flask, render_template, Blueprint, redirect, url_for
 
-from flask import Flask, render_template, Blueprint, redirect, request, url_for
-
-from amigo.config import Config
 from amigo.main.utils.utils import get_data, encode_url
 
 main = Blueprint("main", __name__)
