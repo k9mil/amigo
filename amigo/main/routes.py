@@ -22,7 +22,8 @@ def process():
     try:
         get_data()
     except KeyError:
-        return redirect(url_for("main.index"))
+        return redirect(url_for("errors.notfound"))
+        
     return redirect(url_for("main.waiting"))
 
 @main.route("/waiting")

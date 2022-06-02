@@ -3,7 +3,8 @@ import re, json, urllib
 from flask import request, redirect, url_for
 from urllib.parse import urlencode
 
-usr_data = []
+user_data = []
+
 
 def encode_url():
     """
@@ -23,6 +24,8 @@ def encode_url():
     return encoded_url
 
 def get_data():
+    """
+    """
     user = []
 
     steam_id_re = re.compile("https://steamcommunity.com/openid/id/(.*?)$")
@@ -30,21 +33,23 @@ def get_data():
     steam_data = get_user_info(current_user.group(1))
     
     user.append(steam_data["personaname"])
+    obtain_data(user, steam_data)
 
-    try:
-        obtain_data(user, steam_data)
-    except KeyError:
-        return redirect(url_for("errors.notfound"))
-        
-    usr_data.append(user)
+    user_data.append(user)
 
 def obtain_data(user, steam_data):
+    """
+    """
+    print("a")
+    print(steam_data)
     if (steam_data["gameextrainfo"]):
         user.append(steam_data["gameextrainfo"])
     elif (steam_data["gameid"]):
         user.append(steam_data["gameid"])
 
 def get_user_info(steam_id):
+    """
+    """
     url = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=40B868AA0378A7783543346141620CB4&steamids={steam_id}"
     rv = json.load(urllib.request.urlopen(url))
 

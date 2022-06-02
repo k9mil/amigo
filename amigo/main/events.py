@@ -9,8 +9,6 @@ rooms = {}
 
 @socketio.on("connect")
 def connect():
-    print("connected")
-    print(total_clients)
     total_clients.append(request.sid) 
 
     if len(total_clients) % 2 == 0:
