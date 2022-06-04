@@ -1,9 +1,9 @@
 import re, json, urllib
 
+from amigo import redis_conn
+
 from flask import request
 from urllib.parse import urlencode
-
-user_data = []
 
 
 def encode_url():
@@ -26,24 +26,23 @@ def encode_url():
 def get_data():
     """
     """
-    user = []
 
     steam_id_re = re.compile("https://steamcommunity.com/openid/id/(.*?)$")
     current_user = steam_id_re.search(dict(request.args)["openid.identity"])
     steam_data = get_user_info(current_user.group(1))
-    
-    user.append(steam_data["personaname"])
-    obtain_game(user, steam_data)
+    game = obtain_game(steam_data)
 
-    user_data.append(user)
+    redis_conn.hmset(
+        current_user.group(1), {"username": steam_data["personaname"].encode('utf-8'), "game": game.encode('utf-8')}
+    )
 
-def obtain_game(user, steam_data):
+def obtain_game(steam_data):
     """
     """
     if (steam_data["gameextrainfo"]):
-        user.append(steam_data["gameextrainfo"])
+        return steam_data["gameextrainfo"]
     elif (steam_data["gameid"]):
-        user.append(steam_data["gameid"])
+        return steam_data["gameid"]
 
 def get_user_info(steam_id):
     """

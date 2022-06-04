@@ -2,6 +2,9 @@ from flask import Flask
 from flask_socketio import SocketIO
 from amigo.config import Config
 
+import redis
+
+redis_conn = redis.Redis(host = "localhost", port = 6379, db = 0)
 socketio = SocketIO(cors_allowed_origins = "*")
 
 def create_app(config_class=Config):

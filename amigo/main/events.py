@@ -1,60 +1,26 @@
 from flask import request, url_for
 from flask_socketio import send, emit, join_room, leave_room
 
-from .. import socketio
+from amigo import redis_conn
 
-total_clients = []
-n = 1
-rooms = {}
+from .. import socketio
 
 @socketio.on("connect")
 def connect():
-    total_clients.append(request.sid) 
-
     if len(total_clients) % 2 == 0:
         emit("redirect", {"url": url_for("main.chat")}, broadcast=True)
 
 @socketio.on("disconnect")
 def disconnect():
-    total_clients.remove(request.sid)
     print("disconnect")
 
 @socketio.on("join")
 def on_join():
-    global n
-    roomName = "room" + str(n)
-
-    if roomName in rooms:
-        pass
-    else: 
-        rooms[roomName] = []
-
-    if len(rooms[roomName]) <= 1:
-        rooms[roomName].append(request.sid)
-    else:
-        n += 1
-        roomName = "room" + str(n)
-
-        if roomName in rooms:
-            pass
-        else: 
-            rooms[roomName] = []
-
-        rooms[roomName].append(request.sid)
-
-    room = roomName
-    join_room(room)
+    join_room("room")
 
 @socketio.on("leave")
 def on_leave():
-    global n
-    roomName = "room" + str(n)
-
-    total_clients.remove(request.sid)
-    rooms[roomName].remove(request.sid)
-
-    room = roomName
-    leave_room(room)
+    leave_room("room")
 
 @socketio.on("message")
 def handleMessage(msg):
