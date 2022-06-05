@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Blueprint, redirect, url_for
 
 from amigo.main.utils.data_utils import get_data, encode_url
+from amigo.main.utils.events_utils import access_required
 
 main = Blueprint("main", __name__)
 
@@ -48,6 +49,7 @@ def process():
     return redirect(url_for("main.waiting"))
 
 @main.route("/waiting")
+@access_required()
 def waiting():
     """Returns & renders the waiting page.
 
@@ -60,6 +62,7 @@ def waiting():
     return render_template("waiting.html")
 
 @main.route("/chat")
+@access_required()
 def chat():
     """Returns & renders the chat page.
 

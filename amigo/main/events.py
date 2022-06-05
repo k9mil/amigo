@@ -56,7 +56,7 @@ def disconnect() -> None:
 
 @socketio.on("join")
 def join() -> None:
-    """Creates a session variable 'room', and then joins the said room.
+    """Creates a session variable 'room', and then joins the room.
 
     Args:
         None
@@ -96,11 +96,8 @@ def message(msg: str) -> None:
         None
     """
 
-    sender_id: int = request.sid
-    room: str = session.get("room")
-    tmp: list[None] = []
+    msg_data: list[None] = []
+    msg_data.append(msg)
+    msg_data.append(request.sid)
 
-    tmp.append(msg)
-    tmp.append(sender_id)
-
-    send({"msg": tmp}, to=room)
+    send({"msg": msg_data}, to=session.get("room"))
