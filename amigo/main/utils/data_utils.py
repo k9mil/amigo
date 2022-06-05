@@ -9,6 +9,7 @@ from urllib.parse import urlencode
 def encode_url():
     """
     """
+
     openid_url = "https://steamcommunity.com/openid/login"
 
     params = {
@@ -43,6 +44,7 @@ def get_data():
 def obtain_game(steam_data):
     """
     """
+
     if (steam_data["gameextrainfo"]):
         return steam_data["gameextrainfo"]
     elif (steam_data["gameid"]):
@@ -51,6 +53,7 @@ def obtain_game(steam_data):
 def get_user_info(steam_id):
     """
     """
+    
     url = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=40B868AA0378A7783543346141620CB4&steamids={steam_id}"
     rv = json.load(urllib.request.urlopen(url))
 

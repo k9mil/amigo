@@ -8,6 +8,9 @@ redis_conn = redis.Redis(host = "localhost", port = 6379, db = 0)
 socketio = SocketIO(cors_allowed_origins = "*")
 
 def create_app(config_class=Config):
+    """
+    """
+    
     app = Flask(__name__)
     app.config.from_object(Config)
 

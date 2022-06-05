@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Blueprint, redirect, url_for
 
-from amigo.main.utils.utils import get_data, encode_url
+from amigo.main.utils.data_utils import get_data, encode_url
 
 main = Blueprint("main", __name__)
 
