@@ -1,4 +1,4 @@
-import re, json, urllib
+import re, json, urllib, random
 
 from amigo import redis_conn
 
@@ -31,12 +31,13 @@ def get_data():
     current_user = steam_id_re.search(dict(request.args)["openid.identity"])
     steam_data = get_user_info(current_user.group(1))
     game = obtain_game(steam_data)
+    rand_id = random.randint(0,25565)
 
     redis_conn.hmset(
-        current_user.group(1), {"username": steam_data["personaname"].encode('utf-8'), "game": game.encode('utf-8')}
+        rand_id, {"username": steam_data["personaname"].encode('utf-8'), "game": game.encode('utf-8')}
     )
 
-    session["id"] = current_user.group(1)
+    session["steam_id"] = rand_id
     session["game"] = game
 
 def obtain_game(steam_data):
