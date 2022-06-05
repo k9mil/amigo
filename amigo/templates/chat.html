@@ -42,11 +42,6 @@
                 }
             });   
         });
-
-        $(document).ready(function() {
-                document.getElementById('messages').scrollIntoView(false);
-            }
-        );
         </script>
 {% endblock %}
 {% block body %}
@@ -57,7 +52,7 @@
                     <div id="messages" class="messages overflow-y-scroll scrollbar">
                         <div class="mb-6 flex flex-col justify-center items-center">
                             <span class="w-max text-slate-500 justify-center items-center text-center text-mini">
-                                Beginning of your conversation with Andrew!
+                                Beginning of your conversation with {name}!
                             </span>
                         </div>
                     </div>
