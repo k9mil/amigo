@@ -2,7 +2,7 @@ import re, json, urllib
 
 from amigo import redis_conn
 
-from flask import request
+from flask import request, session
 from urllib.parse import urlencode
 
 
@@ -35,6 +35,9 @@ def get_data():
     redis_conn.hmset(
         current_user.group(1), {"username": steam_data["personaname"].encode('utf-8'), "game": game.encode('utf-8')}
     )
+
+    session["id"] = current_user.group(1)
+    session["game"] = game
 
 def obtain_game(steam_data):
     """
