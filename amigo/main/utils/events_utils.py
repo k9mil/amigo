@@ -18,11 +18,12 @@ def check_conditions() -> list[int]:
     """
 
     for hash in redis_conn.scan_iter("*"):
-        current_game: str = redis_conn.hget(hash, "game").decode('utf-8')
-        current_sid: int = redis_conn.hget(hash, "sid").decode('utf-8')
+        current_game: str = hget(hash, "game")
+        current_sid: int = hget(hash, "sid")
         current_steam_id: int = session["steam_id"]
 
         if current_game == session.get("game") and str(current_steam_id) != hash.decode('utf-8'):
+            users.clear()
             users.extend([current_sid, request.sid])
             create_room(current_sid, hash, request.sid)
 
@@ -42,3 +43,17 @@ def create_room(current_sid: int, hash: bytes, request_sid: int) -> None:
 
     redis_conn.hset(session["steam_id"], "room", request_sid + current_sid)
     redis_conn.hset(hash.decode('utf-8'), "room", request_sid + current_sid)
+
+def hget(key1, key2):
+    """Takes in two keys for hget(), and returns a decoded value from redis.
+
+    Args:
+        key1: The current 'hash' in iteration.
+        key2: The variable to search for.
+
+    Returns:
+        value.decode('utf-8'): The value in utf-8 format.
+    """
+
+    value = redis_conn.hget(key1, key2)
+    return value.decode('utf-8')

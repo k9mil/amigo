@@ -2,7 +2,7 @@ from flask import request, url_for, session
 from flask_socketio import send, emit, join_room, leave_room
 
 from amigo import redis_conn
-from amigo.main.utils.events_utils import check_conditions
+from amigo.main.utils.events_utils import check_conditions, hget
 
 from .. import socketio
 
@@ -54,7 +54,7 @@ def join() -> None:
         None
     """
 
-    session["room"] = redis_conn.hget(session["steam_id"], "room").decode('utf-8')
+    session["room"] = hget(session["steam_id"], "room")
     room: str = session.get("room")
     join_room(room)
 
@@ -85,8 +85,5 @@ def message(msg: str) -> None:
         None
     """
 
-    msg_data: list[None] = []
-    msg_data.append(msg)
-    msg_data.append(request.sid)
-
+    msg_data: list[str, int] = [[msg, request.sid]]
     send({"msg": msg_data}, to=session.get("room"))
