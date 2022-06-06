@@ -2,6 +2,8 @@ from functools import wraps
 from flask import session, render_template
 
 def access_required():
+    """
+    """
     def access_decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):

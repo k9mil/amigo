@@ -20,13 +20,13 @@
             socket.on("message", function(msg) {
                 if (socket.id == msg.msg[1]) {
                     $(".messages").append(
-                    `<div class="mt-2 mr-2 flex flex-row w-max bg-slate-200 rounded-lg p-[0.45rem] text-black justify-center items-center ml-auto">
+                    `<div class="mt-2 mr-2 flex flex-row w-max max-w-full bg-slate-200 rounded-lg p-[0.45rem] text-black justify-center items-center ml-auto">
                         <p>` + msg.msg[0] + `</p>
                     </div>`
                 );  
                 } else {
                     $(".messages").append(
-                    `<div class="mt-2 flex flex-row w-max bg-blue-500 rounded-lg p-[0.45rem] text-white justify-center items-center">
+                    `<div class="mt-2 flex flex-row w-max max-w-full bg-blue-500 rounded-lg p-[0.45rem] text-white justify-center items-center break-all">
                         <p>` + msg.msg[0] + `</p>
                     </div>`  
                  );    
@@ -49,7 +49,7 @@
         <div class="flex justify-center items-center">
             <div class="flex flex-col items-center">
                 <div class="text flex flex-col justify-between w-80 2xl:w-[45rem] xl:w-[35rem] lg:w-[30rem] md:w-[30rem] sm:w-[30rem] 2xl:h-[30rem] xl:h-[36rem] lg:h-[37.5rem] h-[37.5rem] shadow-2xl rounded-xl bg-white border-2 border-white space-y-4 p-4 text-sm 2xl:text-sm xl:text-sm lg:text-sm">
-                    <div id="messages" class="messages overflow-y-scroll scrollbar">
+                    <div id="messages" class="messages w-full overflow-y-scroll overflow-x-hidden scrollbar">
                         <div class="mb-6 flex flex-col justify-center items-center">
                             <span class="w-max text-slate-500 justify-center items-center text-center text-mini">
                                 Beginning of your conversation with {name}!
@@ -58,7 +58,7 @@
                     </div>
                     <div class="border-t-2 border-gray-200 px-4 pt-4">
                         <div class="flex flex-row text-center justify-center items-center">
-                           <input id="text" type="text" placeholder="Write your message!" class="pl-4 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
+                           <input id="text" type="text" placeholder="Write your message!" class="pl-4 pr-2 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
                         </div>
                      </div>
                 </div>

@@ -1,7 +1,9 @@
-from flask import Flask, render_template, Blueprint, redirect, url_for
+from flask import Flask, render_template, Blueprint, redirect, url_for, session
 
 from amigo.main.utils.data_utils import get_data, encode_url
 from amigo.main.utils.events_utils import access_required
+
+from amigo import redis_conn
 
 main = Blueprint("main", __name__)
 
@@ -73,3 +75,23 @@ def chat():
         _render: A rendered page.
     """
     return render_template("chat.html")
+
+
+@main.route("/help")
+def help():
+    """Returns & renders the help page.
+
+    Args:
+        None
+    
+    Returns:
+        _render: A rendered page.
+    """
+    
+    # temporary way to flush
+
+    redis_conn.delete(session["steam_id"])
+    session.pop("steam_id", None)
+    redis_conn.flushall()
+
+    return render_template("help.html")
