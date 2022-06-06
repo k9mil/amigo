@@ -2,10 +2,10 @@ from flask import request, url_for, session
 from flask_socketio import send, emit, join_room, leave_room
 
 from amigo import redis_conn
+from amigo.main.utils.events_utils import check_conditions
 
 from .. import socketio
 
-users: list[None] = []
 
 @socketio.on("redirect")
 def redirect() -> None:
@@ -23,21 +23,10 @@ def redirect() -> None:
     """
 
     redis_conn.hset(session["steam_id"], "sid", request.sid)
+    users = check_conditions()
 
-    for k in redis_conn.scan_iter("*"):
-        current_game: str = redis_conn.hget(k, "game").decode('utf-8')
-        current_sid: int = redis_conn.hget(k, "sid").decode('utf-8')
-
-        current_steam_id: int = session["steam_id"]
-
-        if current_game == session.get("game") and str(current_steam_id) != k.decode('utf-8'):
-            users.append(current_sid)
-            users.append(request.sid)
-
-            redis_conn.hset(session["steam_id"], "room", request.sid + current_sid)
-            redis_conn.hset(k.decode('utf-8'), "room", request.sid + current_sid)
-
-            emit("redirect", {"url": url_for("main.chat")}, to=users)
+    if users:
+        emit("redirect", {"url": url_for("main.chat")}, to=users)
 
 @socketio.on("disconnect")
 def disconnect() -> None:

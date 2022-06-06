@@ -2,7 +2,8 @@ import re, json, urllib, random
 
 from amigo import redis_conn
 
-from flask import request, session
+from flask import request, session, render_template
+from functools import wraps
 from urllib.parse import urlencode
 
 
@@ -55,27 +56,56 @@ def get_data() -> None:
     session["steam_id"] = rand_id
     session["game"] = game
 
-def obtain_game(steam_data) -> str:
+def obtain_game(steam_data: dict[str, str]) -> str:
     """Obtains game data, some games only have 'gameid' which is a unique identifier, and some games have
     'gameextrainfo' which is the full game name.
 
     Args:
-        steam_data: 
+        steam_data: JSON response containing user data.
 
     Returns:
         steam_data["variable"]: A string containing either the name, or the id of the game.
     """
+
+    print(steam_data)
 
     if (steam_data["gameextrainfo"]):
         return steam_data["gameextrainfo"]
     elif (steam_data["gameid"]):
         return steam_data["gameid"]
 
-def get_user_info(steam_id) -> dict[str, str]:
-    """
+def get_user_info(steam_id: int) -> dict[str, str]:
+    """Gets a player summary from the Steam API, and returns the json response.
+
+    Args:
+        steam_id: Steam ID of the user.
+
+    Returns:
+        rv["response"]["players"][0]: JSON response containing user data.
     """
     
     url: str = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=40B868AA0378A7783543346141620CB4&steamids={steam_id}"
     rv: dict[str, list] = json.load(urllib.request.urlopen(url))
 
     return rv["response"]["players"][0]
+
+def access_required():
+    """Decorator which acts as a mixin, that restricts certain pages based on whether they have a valid steam_id in their
+    session cookie.
+
+    Args:
+        None
+    
+    Returns:
+        wrapper: The inner function.
+    """
+
+    def access_decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if "steam_id" in session:
+                return func(*args, **kwargs)
+            else:
+                return render_template("index.html")
+        return wrapper
+    return access_decorator

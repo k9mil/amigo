@@ -1,7 +1,6 @@
 from flask import Flask, render_template, Blueprint, redirect, url_for, session
 
-from amigo.main.utils.data_utils import get_data, encode_url
-from amigo.main.utils.events_utils import access_required
+from amigo.main.utils.data_utils import get_data, encode_url, access_required
 
 from amigo import redis_conn
 
