@@ -1,6 +1,7 @@
 import re, json, urllib, random
 
 from amigo import redis_conn
+from amigo import Config
 
 from flask import request, session, render_template
 from functools import wraps
@@ -67,8 +68,6 @@ def obtain_game(steam_data: dict[str, str]) -> str:
         steam_data["variable"]: A string containing either the name, or the id of the game.
     """
 
-    print(steam_data)
-
     if (steam_data["gameextrainfo"]):
         return steam_data["gameextrainfo"]
     elif (steam_data["gameid"]):
@@ -84,7 +83,7 @@ def get_user_info(steam_id: int) -> dict[str, str]:
         rv["response"]["players"][0]: JSON response containing user data.
     """
     
-    url: str = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=40B868AA0378A7783543346141620CB4&steamids={steam_id}"
+    url: str = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={Config.STEAM_KEY}&steamids={steam_id}"
     rv: dict[str, list] = json.load(urllib.request.urlopen(url))
 
     return rv["response"]["players"][0]
