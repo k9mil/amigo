@@ -23,6 +23,7 @@ def redirect() -> None:
     """
 
     redis_conn.hset(session["steam_id"], "sid", request.sid)
+    emit("data", redis_conn.dbsize())
     users = check_conditions()
 
     if users:
@@ -85,5 +86,5 @@ def message(msg: str) -> None:
         None
     """
 
-    msg_data: list[str, int] = [[msg, request.sid]]
+    msg_data: list[str, int] = [msg, request.sid]
     send({"msg": msg_data}, to=session.get("room"))
