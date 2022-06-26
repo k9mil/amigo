@@ -1,3 +1,4 @@
+from ast import Str
 from flask import request, session
 
 from amigo import redis_conn
@@ -23,12 +24,12 @@ def check_conditions() -> list[int]:
     for r_hash in redis_conn.scan_iter("*"):
         current_game: str = hget(r_hash, "game")
         current_sid: int = hget(r_hash, "sid")
-        current_availability: bool = hget(r_hash, "available")
+        current_availability: str = hget(r_hash, "available")
 
         cond_list = (
             current_game == user_game
             and str(user_steam_id) != r_hash.decode('utf-8')
-            and current_availability is "True"
+            and current_availability == "True"
         )
 
         if cond_list:
@@ -37,7 +38,7 @@ def check_conditions() -> list[int]:
             create_room(current_sid, r_hash, request.sid)
 
             redis_conn.hset(user_steam_id, "available", "False")
-            redis_conn.hset(current_sid, "available", "False")
+            redis_conn.hset(r_hash.decode('utf-8'), "available", "False")
 
             return users
 

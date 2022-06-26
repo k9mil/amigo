@@ -1,11 +1,10 @@
-from flask import request, url_for, session
+from flask import Flask, request, url_for, session, request
 from flask_socketio import send, emit, join_room, leave_room
 
 from amigo import redis_conn
 from amigo.main.utils.events_utils import check_conditions, hget
 
 from .. import socketio
-
 
 @socketio.on("redirect")
 def redirect() -> None:
@@ -31,7 +30,7 @@ def redirect() -> None:
         emit("redirect", {"url": url_for("main.chat")}, to=users)
 
 @socketio.on("disconnect")
-def disconnect() -> None:
+def handle_disconnect() -> None:
     """Removes the user from the redis pool, as well as removes their current session.
 
     Args:
@@ -41,9 +40,28 @@ def disconnect() -> None:
         None
     """
 
-    # redis_conn.delete(session["steam_id"])
-    # session.pop("steam_id", None)
-    # redis_conn.flushall()
+    status = hget(session["steam_id"], "available")
+
+    if status == "True":
+        redis_conn.delete(session["steam_id"])
+        session.pop("steam_id", None)
+
+@socketio.on("disconnect", namespace="/chat")
+def handle_disconnect_chat() -> None:
+    """Removes the user from the redis pool, as well as removes their current session.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
+    status = hget(session["steam_id"], "available")
+
+    if status == "False":
+        redis_conn.delete(session["steam_id"])
+        session.pop("steam_id", None)
 
 @socketio.on("join")
 def join() -> None:

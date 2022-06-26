@@ -13,6 +13,8 @@
                 socket.emit('redirect');
             });
 
+            socket.on("disconnect", function() {});
+
             socket.on("data", function(users) {
                 var num = users;
                 document.getElementById("number").innerHTML = num;
