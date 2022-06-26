@@ -86,11 +86,5 @@ def help():
     Returns:
         _render: A rendered page.
     """
-    
-    # temporary way to flush
-
-    redis_conn.delete(session["steam_id"])
-    session.pop("steam_id", None)
-    redis_conn.flushall()
 
     return render_template("help.html")
