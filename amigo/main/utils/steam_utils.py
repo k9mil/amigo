@@ -33,13 +33,14 @@ def encode_url() -> str:
     return encoded_url
 
 def get_data() -> None:
-    """Primary function for obtaining steam data & current game. Creates a redis hash with the username & game data.
+    """Primary function for obtaining steam data & current game. Creates a redis hash with
+    the username & game data.
 
     Appends to session.
 
     Args:
         None
-    
+
     Returns:
         None
     """
@@ -107,7 +108,6 @@ def access_required():
         def wrapper(*args, **kwargs):
             if "steam_id" in session:
                 return func(*args, **kwargs)
-            else:
-                return render_template("index.html")
+            return render_template("index.html")
         return wrapper
     return access_decorator

@@ -23,15 +23,15 @@ def redirect() -> None:
     """
 
     redis_conn.hset(session["steam_id"], "sid", request.sid)
-    emit("data", redis_conn.dbsize())
     users = check_conditions()
 
     if users:
         emit("redirect", {"url": url_for("main.chat")}, to=users)
 
 @socketio.on("disconnect")
-def handle_disconnect() -> None:
-    """Removes the user from the redis pool, as well as removes their current session.
+def disconnect() -> None:
+    """Removes the user from the redis pool, as well as removes their current session
+    in the global namespace (waiting room).
 
     Args:
         None
@@ -45,10 +45,12 @@ def handle_disconnect() -> None:
     if status == "True":
         redis_conn.delete(session["steam_id"])
         session.pop("steam_id", None)
+        session.pop("game", None)
 
 @socketio.on("disconnect", namespace="/chat")
-def handle_disconnect_chat() -> None:
-    """Removes the user from the redis pool, as well as removes their current session.
+def disconnect_chat() -> None:
+    """Removes the user from the redis pool, as well as removes their
+    current session in the chat namespace.
 
     Args:
         None
@@ -62,6 +64,7 @@ def handle_disconnect_chat() -> None:
     if status == "False":
         redis_conn.delete(session["steam_id"])
         session.pop("steam_id", None)
+        session.pop("game", None)
 
 @socketio.on("join")
 def join() -> None:
