@@ -1,4 +1,4 @@
-# amigo
+# 🧑‍🤝‍🧑 amigo
 
 amigo is a web application built in Flask, which aims to match gamers (people playing the same game) and put them in a chat room together! the project is in very, very early stages and is currently in limbo.
 
