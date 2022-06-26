@@ -468,6 +468,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-sepia:  ;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .static {
   position: static;
 }
@@ -512,12 +516,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: -0.25rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
+.-ml-4 {
+  margin-left: -1rem;
 }
 
-.-mt-1 {
-  margin-top: -0.25rem;
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .-mt-0\.5 {
@@ -526,14 +530,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .-mt-0 {
   margin-top: -0px;
-}
-
-.-ml-2 {
-  margin-left: -0.5rem;
-}
-
-.-ml-4 {
-  margin-left: -1rem;
 }
 
 .block {
@@ -572,6 +568,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1rem;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .w-screen {
   width: 100vw;
 }
@@ -596,6 +596,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-4 {
   width: 1rem;
+}
+
+.w-52 {
+  width: 13rem;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
+.w-56 {
+  width: 14rem;
 }
 
 .max-w-full {
@@ -734,6 +746,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.self-center {
+  align-self: center;
+}
+
+.justify-self-center {
+  justify-self: center;
+}
+
 .overflow-x-hidden {
   overflow-x: hidden;
 }
@@ -818,6 +838,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-sky-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(125 211 252 / var(--tw-bg-opacity));
+}
+
+.bg-slate-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+}
+
+.bg-slate-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-br {
