@@ -48,18 +48,21 @@ def get_data() -> None:
     current_user = steam_id_re.search(dict(request.args)["openid.identity"])
     steam_data = get_user_info(current_user.group(1))
     game: str = obtain_game(steam_data)
-    rand_id: int = random.randint(0,25565)
+    rand_id: int = random.randint(0, 25565)
 
     redis_conn.hmset(
-        rand_id, {"username": steam_data["personaname"].encode('utf-8'), "game": game.encode('utf-8')}
+        rand_id,
+        {"username": steam_data["personaname"].encode('utf-8'),
+        "game": game.encode('utf-8'),
+        "available": "True"}
     )
 
     session["steam_id"] = rand_id
     session["game"] = game
 
 def obtain_game(steam_data: dict[str, str]) -> str:
-    """Obtains game data, some games only have 'gameid' which is a unique identifier, and some games have
-    'gameextrainfo' which is the full game name.
+    """Obtains game data, some games only have 'gameid' which is a unique identifier,
+    and some games have 'gameextrainfo' which is the full game name.
 
     Args:
         steam_data: JSON response containing user data.
@@ -68,9 +71,9 @@ def obtain_game(steam_data: dict[str, str]) -> str:
         steam_data["variable"]: A string containing either the name, or the id of the game.
     """
 
-    if (steam_data["gameextrainfo"]):
+    if steam_data["gameextrainfo"]:
         return steam_data["gameextrainfo"]
-    elif (steam_data["gameid"]):
+    elif steam_data["gameid"]:
         return steam_data["gameid"]
 
 def get_user_info(steam_id: int) -> dict[str, str]:
@@ -82,19 +85,19 @@ def get_user_info(steam_id: int) -> dict[str, str]:
     Returns:
         rv["response"]["players"][0]: JSON response containing user data.
     """
-    
+
     url: str = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={Config.STEAM_KEY}&steamids={steam_id}"
     rv: dict[str, list] = json.load(urllib.request.urlopen(url))
 
     return rv["response"]["players"][0]
 
 def access_required():
-    """Decorator which acts as a mixin, that restricts certain pages based on whether they have a valid steam_id in their
-    session cookie.
+    """Decorator which acts as a mixin, that restricts certain pages based on whether they have a
+    valid steam_id in their session cookie.
 
     Args:
         None
-    
+
     Returns:
         wrapper: The inner function.
     """

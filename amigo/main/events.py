@@ -10,10 +10,11 @@ from .. import socketio
 @socketio.on("redirect")
 def redirect() -> None:
     """This function handles the main connection, and essentially only runs in the waiting room,
-    as when it runs on the /chat/ page, there's two exceptions and a pass is thrown. Architecture will be improved.
+    as when it runs on the /chat/ page, there's two exceptions and a pass is thrown.
+    Architecture will be improved.
 
-    Adds the request.sid to the redis hash, then it iterates through all hashes and finds a user playing the same game
-    that is not the current user.
+    Adds the request.sid to the redis hash, then it iterates through all hashes and finds a user 
+    playing the same game that is not the current user.
 
     Args:
         None
@@ -69,7 +70,7 @@ def leave() -> None:
     Returns:
         None
     """
-    
+
     room: str = session.get("room")
     leave_room(room)
 
