@@ -1,13 +1,14 @@
-from flask import Flask, request, url_for, session, request, redirect
+from flask import Flask, request, url_for, session, request
 from flask_socketio import send, emit, join_room, leave_room
 
 from amigo import redis_conn
 from amigo.main.utils.events_utils import check_conditions, hget
+from amigo.main.utils.other_utils import remove_data
 
 from .. import socketio
 
-@socketio.on("redirect")
-def redirect() -> None:
+@socketio.on("process")
+def process() -> None:
     """This function handles the main connection, and essentially only runs in the waiting room,
     as when it runs on the /chat/ page, there's two exceptions and a pass is thrown.
     Architecture will be improved.
@@ -26,7 +27,7 @@ def redirect() -> None:
     users = check_conditions()
 
     if users:
-        emit("redirect", {"url": url_for("main.chat")}, to=users)
+        emit("process", {"url": url_for("main.chat")}, to=users)
 
 @socketio.on("disconnect")
 def disconnect() -> None:
@@ -43,10 +44,7 @@ def disconnect() -> None:
     status = hget(session["steam_id"], "available")
 
     if status == "True":
-        redis_conn.delete(session["steam_id"])
-        session.pop("steam_id", None)
-        session.pop("game", None)
-        session.clear()
+        remove_data()
 
 @socketio.on("disconnect", namespace="/chat")
 def disconnect_chat() -> None:
@@ -63,10 +61,7 @@ def disconnect_chat() -> None:
     status = hget(session["steam_id"], "available")
 
     if status == "False":
-        redis_conn.delete(session["steam_id"])
-        session.pop("steam_id", None)
-        session.pop("game", None)
-        session.clear()
+        remove_data()
 
 @socketio.on("join")
 def join() -> None:

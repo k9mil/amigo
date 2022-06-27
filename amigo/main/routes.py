@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Blueprint, redirect, url_for, session
 
 from amigo.main.utils.steam_utils import get_data, encode_url, access_required
+from amigo.main.utils.other_utils import remove_data
 
 from amigo import redis_conn
 
@@ -62,7 +63,7 @@ def waiting():
     """
     
     if session["default"] == True:
-        session.clear()
+        remove_data()
         return redirect(url_for("main.index"))
     else:
         session["default"] = True
@@ -81,6 +82,12 @@ def chat():
         _render: A rendered page.
     """
 
+    if session["default"] == False:
+        remove_data()
+        return redirect(url_for("main.index"))
+    else:
+        session["default"] = False
+
     return render_template("chat.html")
 
 
@@ -95,5 +102,4 @@ def help():
         _render: A rendered page.
     """
 
-    redis_conn.flushall()
     return render_template("help.html")
