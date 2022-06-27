@@ -60,6 +60,13 @@ def waiting():
     Returns:
         _render: A rendered page.
     """
+    
+    if session["default"] == True:
+        session.clear()
+        return redirect(url_for("main.index"))
+    else:
+        session["default"] = True
+
     return render_template("waiting.html")
 
 @main.route("/chat")
@@ -73,6 +80,7 @@ def chat():
     Returns:
         _render: A rendered page.
     """
+
     return render_template("chat.html")
 
 
@@ -87,4 +95,5 @@ def help():
         _render: A rendered page.
     """
 
+    redis_conn.flushall()
     return render_template("help.html")

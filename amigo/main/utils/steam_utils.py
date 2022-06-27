@@ -60,6 +60,7 @@ def get_data() -> None:
 
     session["steam_id"] = rand_id
     session["game"] = game
+    session["default"] = False
 
 def obtain_game(steam_data: dict[str, str]) -> str:
     """Obtains game data, some games only have 'gameid' which is a unique identifier,
@@ -76,6 +77,8 @@ def obtain_game(steam_data: dict[str, str]) -> str:
         return steam_data["gameextrainfo"]
     elif steam_data["gameid"]:
         return steam_data["gameid"]
+
+    return ""
 
 def get_user_info(steam_id: int) -> dict[str, str]:
     """Gets a player summary from the Steam API, and returns the json response.

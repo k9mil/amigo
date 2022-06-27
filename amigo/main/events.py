@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for, session, request
+from flask import Flask, request, url_for, session, request, redirect
 from flask_socketio import send, emit, join_room, leave_room
 
 from amigo import redis_conn
@@ -46,6 +46,7 @@ def disconnect() -> None:
         redis_conn.delete(session["steam_id"])
         session.pop("steam_id", None)
         session.pop("game", None)
+        session.clear()
 
 @socketio.on("disconnect", namespace="/chat")
 def disconnect_chat() -> None:
@@ -65,6 +66,7 @@ def disconnect_chat() -> None:
         redis_conn.delete(session["steam_id"])
         session.pop("steam_id", None)
         session.pop("game", None)
+        session.clear()
 
 @socketio.on("join")
 def join() -> None:
