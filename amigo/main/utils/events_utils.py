@@ -22,8 +22,6 @@ def check_conditions() -> list[int]:
     user_game: str = session["game"]
 
     for r_hash in redis_conn.scan_iter("*"):
-        print(r_hash)
-        print("after hash:(")
         current_game: str = hget(r_hash, "game")
         current_sid: int = hget(r_hash, "sid")
         current_availability: str = hget(r_hash, "available")
