@@ -1,6 +1,6 @@
 {% extends "./base/base.html" %}
 {% block title %}
-    <title>amigo — chatting with {user}!</title>
+    <title>amigo — chatting!</title>
 {% endblock %}
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -33,6 +33,15 @@
                  );    
                 }
             });
+
+            socket.on("exit", function() {
+                console.log("INSIDE EXIT")
+                $(".messages").append(
+                `<div class="mt-2 flex flex-row w-max max-w-full p-[0.45rem] text-gray-400 justify-center items-center break-all">
+                    <p>` + "User has left the chat" + `</p>
+                </div>`  
+                 ); 
+            });
         
             $("#text").keypress(function(e) {
                 var code = e.keyCode || e.which;
@@ -53,13 +62,13 @@
                     <div id="messages" class="messages w-full overflow-y-scroll overflow-x-hidden scrollbar">
                         <div class="mb-6 flex flex-col justify-center items-center">
                             <span class="w-max text-slate-500 justify-center items-center text-center text-mini">
-                                Beginning of your conversation with {name}!
+                                Beginning of your conversation
                             </span>
                         </div>
                     </div>
                     <div class="border-t-2 border-gray-200 px-4 pt-4">
                         <div class="flex flex-row text-center justify-center items-center">
-                           <input id="text" type="text" placeholder="Write your message!" class="pl-4 pr-2 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
+                           <input id="text" type="text" placeholder="Write your message..." class="pl-4 pr-2 text-sm w-full transform transition duration-500 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-lg py-3">
                         </div>
                      </div>
                 </div>

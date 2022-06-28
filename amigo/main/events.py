@@ -59,6 +59,7 @@ def disconnect_chat() -> None:
     """
 
     status = hget(session["steam_id"], "available")
+    socketio.emit("exit", to=session.get("room"))
 
     if status == "False":
         remove_data()
@@ -81,6 +82,7 @@ def join() -> None:
 @socketio.on("leave")
 def leave() -> None:
     """Retrieves the room from the session, and then leaves the room.
+    (be careful)
 
     Args:
         None
